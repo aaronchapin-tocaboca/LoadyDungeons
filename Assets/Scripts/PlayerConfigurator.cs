@@ -9,6 +9,7 @@ public class PlayerConfigurator : MonoBehaviour
     private Transform m_HatAnchor;
 
     private AsyncOperationHandle m_HatLoadingHandle;
+    private bool hatHandleCreated = false;
 
     private ApplyRemoteConfigSettings remoteConfigScript;
 
@@ -56,11 +57,13 @@ public class PlayerConfigurator : MonoBehaviour
         m_HatLoadingHandle = Addressables.InstantiateAsync(hatKey, m_HatAnchor, false);
 
         m_HatLoadingHandle.Completed += OnHatInstantiated;
+        hatHandleCreated = true;
     }
 
     private void OnDisable()
     {
-        m_HatLoadingHandle.Completed -= OnHatInstantiated;
+        if(hatHandleCreated)
+            m_HatLoadingHandle.Completed -= OnHatInstantiated;
     }
 
     private void OnHatInstantiated(AsyncOperationHandle obj)
@@ -71,6 +74,7 @@ public class PlayerConfigurator : MonoBehaviour
             Debug.Log("Hat instantiated successfully");
         }
 
-        m_HatLoadingHandle.Completed -= OnHatInstantiated;
+        if(hatHandleCreated)
+            m_HatLoadingHandle.Completed -= OnHatInstantiated;
     }
 }

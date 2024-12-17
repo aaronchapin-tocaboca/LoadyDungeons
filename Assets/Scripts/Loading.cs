@@ -61,13 +61,8 @@ public class Loading : MonoBehaviour
     // Function to handle which level is loaded next
     public void GoToNextLevel()
     {
-        if(ApplyRemoteConfigSettings.Instance.season == "Default")
-        {
-            Addressables.LoadSceneAsync("Level_0" + GameManager.s_CurrentLevel, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
-        }
-        
-        // Else If the season is supposed to be Winter
-        else if (ApplyRemoteConfigSettings.Instance.season == "Winter")
+        Debug.Log($"PRESSED BUTTON {ApplyRemoteConfigSettings.Instance.season}");
+        if (ApplyRemoteConfigSettings.Instance.season == "Winter")
         {
             Debug.LogError("InsideGoToNextLevel()");
             Addressables.LoadSceneAsync("Level_0" + "4", UnityEngine.SceneManagement.LoadSceneMode.Single, true);
@@ -79,6 +74,15 @@ public class Loading : MonoBehaviour
             Debug.LogError("InsideGoToNextLevel()");
             Addressables.LoadSceneAsync("Level_0" + "2", UnityEngine.SceneManagement.LoadSceneMode.Single, true);
         }
+        else
+        {
+            var loadScene = "Level_0" + GameManager.s_CurrentLevel;
+            Debug.Log($"Loading: {loadScene}");
+            Addressables.LoadSceneAsync(loadScene, UnityEngine.SceneManagement.LoadSceneMode.Single, true);
+            Debug.Log($"Started loading: {loadScene}");
+        }
+
+        Debug.Log("Finished GoToNextLevel call");
     }
 
     private void Update()

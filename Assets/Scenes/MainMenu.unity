@@ -989,8 +989,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: a9f6da264584558478e57f0d26b9befb, type: 2}
-        m_TargetAssemblyTypeName: GameManagerSO, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadStore
         m_Mode: 1
         m_Arguments:

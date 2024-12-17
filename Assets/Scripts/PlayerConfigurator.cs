@@ -30,22 +30,32 @@ public class PlayerConfigurator : MonoBehaviour
             if (ApplyRemoteConfigSettings.Instance.season == "Default")
             {
                //Debug.Log("Formatted String 2 " + string.Format("Hat{0:00}", remoteConfigScript.activeHat));
-
-                SetHat(string.Format("Hat{0:00}", remoteConfigScript.activeHat));
+               Debug.Log($"Setting hat from remote config script {remoteConfigScript.activeHat}");
+               SetHat(string.Format("Hat{0:00}", remoteConfigScript.activeHat));
             }
 
             else if (ApplyRemoteConfigSettings.Instance.season == "Winter")
             {
+                Debug.Log("Setting hat from winter season");
                 SetHat(string.Format("Hat{0:00}", "04"));
             }
 
             else if (ApplyRemoteConfigSettings.Instance.season == "Halloween")
             {
+                Debug.Log("Setting hat from halloween season");
                 SetHat(string.Format("Hat{0:00}", "05"));
             }
 
-            //hatKey is an Addressable Label
-            //Debug.Log("Hat String: " + string.Format("Hat{0:00}", UnityEngine.Random.Range(0, 4)));
+            else
+            {
+                Debug.Log($"Setting hat from local game manager {GameManager.s_ActiveHat}");
+                SetHat(string.Format("Hat{0:00}", GameManager.s_ActiveHat));
+            }
+
+        }
+        else
+        {
+            Debug.Log("No hat configured");
         }
     }
 
@@ -54,6 +64,8 @@ public class PlayerConfigurator : MonoBehaviour
         // We are using the InstantiateAsync function on the Addressables API, the non-Addressables way 
         // looks something like the following line, however, this version is not Asynchronous
         // GameObject.Instantiate(prefabToInstantiate);
+
+        Debug.Log($"Setting Hat {hatKey}");
         m_HatLoadingHandle = Addressables.InstantiateAsync(hatKey, m_HatAnchor, false);
 
         m_HatLoadingHandle.Completed += OnHatInstantiated;
@@ -73,8 +85,15 @@ public class PlayerConfigurator : MonoBehaviour
         {
             Debug.Log("Hat instantiated successfully");
         }
+        else
+        {
+            Debug.LogWarning("Hat instantiation failed");
+        }
 
         if(hatHandleCreated)
+        {
             m_HatLoadingHandle.Completed -= OnHatInstantiated;
+            hatHandleCreated = false;
+        }
     }
 }

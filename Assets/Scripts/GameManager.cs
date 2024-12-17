@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            Debug.Log("Set up GameManager!");
         }
         else
         {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         // SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
 
         // Scene loaded in Single mode, the previously loaded scenes will be disposed by the Addressables.
+        Debug.Log("Loading next level!");
         Addressables.LoadSceneAsync("LoadingScene", UnityEngine.SceneManagement.LoadSceneMode.Single, true);
     }
 
